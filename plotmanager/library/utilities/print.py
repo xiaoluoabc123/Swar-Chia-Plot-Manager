@@ -1,4 +1,4 @@
-import os
+﻿import os
 import psutil
 import json
 
@@ -64,11 +64,11 @@ def pretty_print_table(rows):
                 continue
             max_characters[i] = length
 
-    headers = "   ".join([cell.center(max_characters[i]) for i, cell in enumerate(rows[0])])
+    headers = " ".join([cell.center(max_characters[i]) for i, cell in enumerate(rows[0])])
     separator = '=' * (sum(max_characters) + 3 * len(max_characters))
     console = [separator, headers, separator]
     for row in rows[1:]:
-        console.append("   ".join([cell.ljust(max_characters[i]) for i, cell in enumerate(row)]))
+        console.append("    ".join([cell.ljust(max_characters[i]) for i, cell in enumerate(row)]))
     console.append(separator)
     return "\n".join(console)
 
@@ -98,13 +98,13 @@ def get_job_data(jobs, running_work, view_settings, as_json=False):
 
 
 def pretty_print_job_data(job_data):
-    headers = ['num', 'job', 'k', 'plot_id', 'pid', 'start', 'elapsed_time', 'phase', 'phase_times', 'progress', 'temp_size']
+    headers = ['数量', '任务', '耕地类型','耕地id','进程pid', '开始时间', '总用时', '阶段', '各阶段用时', '进度', '缓存大小']
     rows = [headers] + job_data
     return pretty_print_table(rows)
 
 
 def get_drive_data(drives, running_work, job_data):
-    headers = ['type', 'drive', 'used', 'total', '%', '#', 'temp', 'dest']
+    headers = ['类型', '路径盘', '用量', '总用量', '百分比', '任务数', '缓存对象', '目标盘对象']
     rows = []
 
     pid_to_num = {}
@@ -201,22 +201,22 @@ def print_view(jobs, running_work, analysis, drives, next_log_check, view_settin
     else:
         os.system('clear')
     print(pretty_print_job_data(job_data))
-    print(f'Manager Status: {"Running" if manager_processes else "Stopped"}')
+    print(f'耕地助手运行状态: {"正在运行" if manager_processes else "已停止"}')
     print()
 
     if view_settings.get('include_drive_info'):
         print(drive_data)
     if view_settings.get('include_cpu'):
-        print(f'CPU Usage: {psutil.cpu_percent()}%')
+        print(f'CPU 利用率: {psutil.cpu_percent()}%')
     if view_settings.get('include_ram'):
         ram_usage = psutil.virtual_memory()
-        print(f'RAM Usage: {pretty_print_bytes(ram_usage.used, "gb")}/{pretty_print_bytes(ram_usage.total, "gb", 2, "GiB")}'
+        print(f'内存 利用率: {pretty_print_bytes(ram_usage.used, "gb")}/{pretty_print_bytes(ram_usage.total, "gb", 2, "GiB")}'
               f'({ram_usage.percent}%)')
     print()
     if view_settings.get('include_plot_stats'):
-        print(f'Plots Completed Yesterday: {analysis["summary"].get(datetime.now().date() - timedelta(days=1), 0)}')
-        print(f'Plots Completed Today: {analysis["summary"].get(datetime.now().date(), 0)}')
+        print(f'昨天完成耕地数: {analysis["summary"].get(datetime.now().date() - timedelta(days=1), 0)}')
+        print(f'当日完成耕地数: {analysis["summary"].get(datetime.now().date(), 0)}')
         print()
     if loop:
-        print(f"Next log check at {next_log_check.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"下阶段日志时间 {next_log_check.strftime('%Y-%m-%d %H:%M:%S')}")
     print()
