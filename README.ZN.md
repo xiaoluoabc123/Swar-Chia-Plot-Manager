@@ -3,7 +3,7 @@
 
 [English](README.md) / [Русский](README.RU.md) / [中文](README.ZN.md)
 
-![temp_screene](https://user-images.githubusercontent.com/58470835/118708329-2ef99300-b84e-11eb-94ae-a3db43fff77c.png)
+![QQ图片20210521211340](https://user-images.githubusercontent.com/58470835/119142779-73b54200-ba79-11eb-8e2c-06278ac49e1d.png)
 
 开发版本：v0.0.1
 
