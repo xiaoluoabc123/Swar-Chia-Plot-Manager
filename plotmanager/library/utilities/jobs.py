@@ -148,7 +148,7 @@ def determine_job_size(k_size):
     except ValueError:
         return 0
     base_k_size = 32
-    size = 109000000000
+    size = 110000000000
     if k_size < base_k_size:
         # Why 2.058? Just some quick math.
         size /= pow(2.058, base_k_size-k_size)
